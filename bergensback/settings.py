@@ -94,8 +94,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'bergens_db',
-        'USER': 'postgres',
-        'PASSWORD': 'bergensdbmdp',
+        'USER': 'monutilisateursql',
+        'PASSWORD': 'bergensmonutilisateursqlmdp',
         'HOST': '127.0.0.1',  # Utilisez le nom du service db défini dans docker-compose.yml       
         'PORT': '5432',  # Le port par défaut pour PostgreSQL
     }
