@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY_ENV = os.environ.get('SECRET_KEY')
 SECRET_KEY = '&py)ylkg#(3eqgk^n+r4g82h4e@o7#v(4uz@2(*j*p@k7x0^j$'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '2001:bc8:1210:112e:dc00:ff:fe33:6465', '51.159.183.148', 'admin.bergens.fr', 'www.admin.bergens.fr']
 
