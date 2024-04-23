@@ -11,17 +11,22 @@ from django.core.files import File
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
+from django.http import HttpResponse, Http404
 
 
 class ClientFilesAPIView(APIView):
     def get(self, request, client_id, format=None):
         try:
             client = Client.objects.get(id=client_id)
-            serializer = ClientSerializer(client)
-            return Response(serializer.data)
+            if client.file1:
+                with open(client.file1.path, 'rb') as pdf:
+                    response = HttpResponse(pdf.read(), content_type='application/pdf')
+                    response['Content-Disposition'] = f'inline; filename={client.file.name}'
+                    return response
+            else:
+                return HttpResponse('No PDF file found.', status=404)
         except Client.DoesNotExist:
-            return Response({'error': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
-
+            return Http404("Client not found")
 
 
 
