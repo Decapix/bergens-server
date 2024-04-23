@@ -21,12 +21,14 @@ class ClientFilesAPIView(APIView):
             if client.file1:
                 with open(client.file1.path, 'rb') as pdf:
                     response = HttpResponse(pdf.read(), content_type='application/pdf')
-                    response['Content-Disposition'] = f'inline; filename={client.file.name}'
+                    response['Content-Disposition'] = f'inline; filename={client.file1.name}'
                     return response
             else:
                 return HttpResponse('No PDF file found.', status=404)
         except Client.DoesNotExist:
             return Http404("Client not found")
+
+
 
 
 
