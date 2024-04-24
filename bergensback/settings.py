@@ -147,7 +147,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-DOMAIN_FRONT = '51.159.183.148:8000'
+DOMAIN_FRONT_PDF = 'admin.bergens.fr'
 SERVER_IP = '51.159.183.148:8000' 
 
 

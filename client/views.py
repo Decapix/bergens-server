@@ -39,7 +39,7 @@ def generate_qr_code(request, client_id):
     
     if created or not qr_code_instance.image:  # Utiliser 'image' au lieu de 'qr_code'
         # Générer l'URL
-        url = f'{settings.DOMAIN_FRONT}/client/{client.id}'
+        url = f'{settings.DOMAIN_FRONT_PDF}/client/{client.id}'
 
         # Générer le QR code
         qr = qrcode.QRCode(
