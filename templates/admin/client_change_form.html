@@ -1,0 +1,17 @@
+{% extends "admin/change_form.html" %}
+{% load static i18n %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+        function copyToClipboard(url) {
+            const el = document.createElement('textarea');
+            el.value = url;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert('URL copiée : ' + url);
+        }
+    </script>
+{% endblock %}

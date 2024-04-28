@@ -11,7 +11,8 @@ from django.db import models
 class Client(models.Model):
     """Model for client with 3 PDF files and an ID."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
+    Seq_nr = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
     file1 = models.FileField(upload_to='fichiers/', blank=True, null=True)
 
 

@@ -4,7 +4,8 @@ from .models import Client, QRCode
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'file1', 'qr_code_link']
+    list_display = ['id', 'name', 'file1', 'get_link', 'qr_code_link']
+    change_form_template = 'admin/client_change_form.html'
 
     def qr_code_link(self, obj):
         qr_code = QRCode.objects.filter(client=obj).first()
@@ -13,6 +14,18 @@ class ClientAdmin(admin.ModelAdmin):
         return format_html(f'<a href="/admin/generate_qr/{obj.id}">Générer</a>')
 
     qr_code_link.short_description = 'QR Code'
+
+
+
+    def get_link(self, obj):
+        # Bouton qui appelle une fonction JavaScript pour copier l'URL dans le presse-papier
+        return format_html(
+            '<button onclick="copyToClipboard(\'{}\')">Copier le lien</button>',
+            f'https://admin.bergens.fr/api/client/{obj.id}'
+        )
+    
+
+    get_link.short_description = 'Copier le lien'
 
     def has_change_permission(self, request, obj=None):
         return False if obj is None else True

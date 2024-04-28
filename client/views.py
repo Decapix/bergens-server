@@ -1,9 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import Client
-from .serializers import ClientSerializer
-from django.http import HttpResponseRedirect
-from django.contrib import admin
+from django.http import  JsonResponse
 from .models import Client, QRCode
 import qrcode
 from io import BytesIO
@@ -12,6 +8,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
 from django.http import HttpResponse, Http404
+
 
 
 class ClientFilesAPIView(APIView):
@@ -31,15 +28,13 @@ class ClientFilesAPIView(APIView):
 
 
 
-
-
 def generate_qr_code(request, client_id):
     client = get_object_or_404(Client, id=client_id)
     qr_code_instance, created = QRCode.objects.get_or_create(client=client)
     
     if created or not qr_code_instance.image:  # Utiliser 'image' au lieu de 'qr_code'
         # Générer l'URL
-        url = f'{settings.DOMAIN_FRONT_PDF}/client/{client.id}'
+        url = f'{settings.DOMAIN_FRONT}/api/client/{client.id}'
 
         # Générer le QR code
         qr = qrcode.QRCode(
@@ -60,3 +55,10 @@ def generate_qr_code(request, client_id):
         qr_code_instance.image.save(filename, File(buffer), save=True)
 
     return redirect(request.META.get('HTTP_REFERER', 'admin:index'))
+
+def get_link(request, client_id):
+    client = get_object_or_404(Client, id=client_id)
+    url = f'https://admin.bergens.fr/api/client/{client.id}'
+    return JsonResponse({'url': url})
+
+
