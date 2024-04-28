@@ -5,7 +5,6 @@ from .models import Client, QRCode
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'file1', 'get_link', 'qr_code_link']
-    change_form_template = 'admin/client_change_form.html'
 
     def qr_code_link(self, obj):
         qr_code = QRCode.objects.filter(client=obj).first()
@@ -16,13 +15,22 @@ class ClientAdmin(admin.ModelAdmin):
     qr_code_link.short_description = 'QR Code'
 
 
-
     def get_link(self, obj):
-        # Bouton qui appelle une fonction JavaScript pour copier l'URL dans le presse-papier
-        return format_html(
-            '<button onclick="copyToClipboard(\'{}\')">Copier le lien</button>',
-            f'https://admin.bergens.fr/api/client/{obj.id}'
-        )
+        # Bouton avec script intégré pour copier l'URL
+        return format_html("""
+            <button onclick="copyToClipboard(this, '{}')">Copier le lien</button>
+            <script>
+            function copyToClipboard(button, url) {
+                const el = document.createElement('textarea');
+                el.value = url;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                button.innerText = 'Copié!';
+            }
+            </script>
+        """, f'https://admin.bergens.fr/api/client/{obj.id}')
     
 
     get_link.short_description = 'Copier le lien'
