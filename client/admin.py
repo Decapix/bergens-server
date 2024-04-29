@@ -4,7 +4,7 @@ from .models import Client, QRCode
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'file1', 'get_link', 'qr_code_link']
+    list_display = ['id', 'Seq_nr', 'name', 'file1', 'get_link', 'qr_code_link']
 
     def get_link(self, obj):
         # Utiliser un attribut data-url pour stocker l'URL et une classe spécifique pour le bouton
